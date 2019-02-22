@@ -4,7 +4,7 @@ android:
     - android-28
     - tools
     - platform-tools
-    - build-tools-27.0.3
+    - build-tools-28.0.3
     - extra-android-m2repository
     - extra-google-m2repository
     - extra-android-support
@@ -13,6 +13,7 @@ android:
     - 'android-sdk-preview-license-.+'
     - 'android-sdk-license-.+'
     - 'intel-android-extra-license.+'
+    - 'export-licenses'
 env:
   global:
    # install timeout in minutes (2 minutes by default)

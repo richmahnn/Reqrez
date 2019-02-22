@@ -23,7 +23,7 @@
         <activity
                 android:name=".ui.component.user.CreateUserActivity" />
         <activity
-                android:name=".ui.component.home.MainActivity">
+                android:name=".ui.component.home.HomeActivity">
         </activity>
 
     </application>

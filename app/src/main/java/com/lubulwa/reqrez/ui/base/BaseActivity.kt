@@ -1,12 +1,12 @@
 package com.lubulwa.reqrez.ui.base
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import dagger.android.support.DaggerAppCompatActivity
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : DaggerAppCompatActivity(){
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    fun navigateToActivity(activityName: Class<*>) {
+        startActivity(Intent(this, activityName))
     }
 
 }
