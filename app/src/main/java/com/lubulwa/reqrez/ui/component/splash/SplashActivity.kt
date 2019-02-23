@@ -16,9 +16,6 @@ class SplashActivity : BaseActivity(), SplashContract.View  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Injection dependencies
-        AndroidInjection.inject(this)
-
         // Start timer
         splashPresenter.initialize()
     }

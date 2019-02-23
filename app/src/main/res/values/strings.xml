@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Reqrez</string>
+
+    <!--Activity names-->
+    <string name="main_activity_name">@string/app_name</string>
+    <string name="create_user_activity_name">Create New User</string>
+
+    <string name="user_first_last_name">%1$s %2$s</string>
+    <string name="user_created_message">User %1$s has been successfully created</string>
+    <string name="refresh">Refresh</string>
+    <string name="list_load_more_msg">Fetching more users</string>
+    <string name="create_user">Create User</string>
+    <string name="name">First and second name</string>
+    <string name="your_job">Your job</string>
+    <string name="empty_name_and_job">Name and Job should not be blank!</string>
+    <string name="no_internet">A network connection is needed to proceed!</string>
+
 </resources>
