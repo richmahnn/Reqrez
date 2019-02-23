@@ -9,11 +9,11 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuilderModule {
   @ContributesAndroidInjector(modules = [RetrofitModule::class])
-
   abstract fun providesHomeActivity(): HomeActivity
 
   @ContributesAndroidInjector
   abstract fun providesSplashActivity(): SplashActivity
 
+  @ContributesAndroidInjector(modules = [RetrofitModule::class])
   abstract fun providesCreateUserActivity(): CreateUserActivity
 }

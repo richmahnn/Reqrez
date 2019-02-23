@@ -27,19 +27,19 @@ data class UserModel(
 
     data class UserData(
         @SerializedName("id")
-        var section: String? = null,
+        var id: String? = null,
 
         @SerializedName("first_name")
-        var subsection: String? = null,
+        var firstName: String? = null,
 
         @SerializedName("last_name")
-        var title: String? = null,
+        var lastName: String? = null,
 
         @SerializedName("avatar")
-        var abstract: String? = null
+        var imageUrl: String? = null
     ) {
         override fun toString(): String {
-            return "UserData(section=$section, subsection=$subsection, title=$title, abstract=$abstract)"
+            return "UserData(id=$id, firstName=$firstName, lastName=$lastName, imageUrl=$imageUrl)"
         }
     }
 
