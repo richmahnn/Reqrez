@@ -5,6 +5,7 @@ import com.lubulwa.reqrez.R
 import com.lubulwa.reqrez.data.ApiService
 import com.lubulwa.reqrez.data.model.CreateUserModel
 import com.lubulwa.reqrez.data.model.CreateUserResponse
+import com.lubulwa.reqrez.schedulers.SchedulerProvider
 import com.lubulwa.reqrez.utils.Network
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 class CreateUserPresenter @Inject constructor(
     private val apiService: ApiService,
-    private val mContext: Context
+    private val schedulerProvider: SchedulerProvider
 ) : CreateUserContract.Presenter {
 
     private val disposable = CompositeDisposable()
@@ -33,16 +34,11 @@ class CreateUserPresenter @Inject constructor(
      * Create user
      */
     override fun createUser(name: String, my_job: String) {
-
-        if (name.isEmpty() || my_job.isEmpty()) {
-            view?.createUserFailed(mContext.getString(R.string.empty_name_and_job))
-            return
-        }
-        
         val createUserModel = CreateUserModel(
             name,
             my_job
         )
+
         createNewUser(apiService.createUser(createUserModel))
     }
 
@@ -53,14 +49,9 @@ class CreateUserPresenter @Inject constructor(
 
         view?.createUserStarted()
 
-        if (!Network.isConnected(mContext)) {
-            view?.createUserFailed(mContext.getString(R.string.no_internet))
-            return
-        }
-
         disposable.add(observable
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
             .subscribe({ createUserResponse ->
                 if (view?.isActive() == false) return@subscribe
 

@@ -7,6 +7,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.lubulwa.reqrez.R
 import com.lubulwa.reqrez.data.model.CreateUserResponse
 import com.lubulwa.reqrez.ui.base.BaseActivity
+import com.lubulwa.reqrez.utils.Network
 import kotlinx.android.synthetic.main.activity_create_user.*
 import javax.inject.Inject
 
@@ -32,7 +33,16 @@ class CreateUserActivity : BaseActivity(), CreateUserContract.View {
             val name = et_username_create.text.toString()
             val my_job = et_job_create.text.toString()
 
-            createUserPresenter.createUser(name, my_job)
+            // validation
+            if (name.isEmpty() || my_job.isEmpty()) {
+                createUserFailed(getString(R.string.empty_name_and_job))
+            } else {
+                if (!Network.isConnected(this)) {
+                    createUserFailed(getString(R.string.no_internet))
+                } else {
+                    createUserPresenter.createUser(name, my_job)
+                }
+            }
         }
     }
 
@@ -46,12 +56,12 @@ class CreateUserActivity : BaseActivity(), CreateUserContract.View {
         et_username_create.text = null
         et_job_create.text = null
 
-        Snackbar.make(mainLayout, getString(R.string.user_created_message, createUserResponse.name), Snackbar.LENGTH_LONG).show()
+        Snackbar.make(mainLayout, getString(R.string.user_created_message, createUserResponse.name), Snackbar.LENGTH_INDEFINITE).show()
     }
 
     override fun createUserFailed(message: String) {
         dismissProgressDilog()
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun isActive(): Boolean = !isFinishing

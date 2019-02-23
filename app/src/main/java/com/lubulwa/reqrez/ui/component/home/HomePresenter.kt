@@ -1,20 +1,15 @@
 package com.lubulwa.reqrez.ui.component.home
 
-import android.content.Context
-import com.lubulwa.reqrez.R
 import com.lubulwa.reqrez.data.ApiService
 import com.lubulwa.reqrez.data.model.UserModel
-import com.lubulwa.reqrez.utils.Constants
-import com.lubulwa.reqrez.utils.Network
+import com.lubulwa.reqrez.schedulers.SchedulerProvider
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class HomePresenter @Inject constructor(
     private val apiService: ApiService,
-    private val mContext: Context
+    private val schedulerProvider: SchedulerProvider
 ) : HomeContract.Presenter {
 
     private val disposable = CompositeDisposable()
@@ -44,14 +39,9 @@ class HomePresenter @Inject constructor(
     private fun loadUsers(observable: Observable<UserModel>) {
         view?.fetchUsersStarted()
 
-        if (!Network.isConnected(mContext)) {
-            view?.fetchUsersFailed(mContext.getString(R.string.no_internet))
-            return
-        }
-
         disposable.add(observable
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
             .subscribe({ userModel ->
                 if (view?.isActive() == false) return@subscribe
 

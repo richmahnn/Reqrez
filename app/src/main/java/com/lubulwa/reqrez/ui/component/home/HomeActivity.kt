@@ -12,7 +12,7 @@ import com.lubulwa.reqrez.data.model.UserModel
 import com.lubulwa.reqrez.ui.base.BaseActivity
 import com.lubulwa.reqrez.ui.component.user.CreateUserActivity
 import com.lubulwa.reqrez.utils.Constants
-import dagger.android.AndroidInjection
+import com.lubulwa.reqrez.utils.Network
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -56,25 +56,33 @@ class HomeActivity : BaseActivity(), HomeContract.View {
                         currentPage++
 
                         Toast.makeText(this@HomeActivity, getString(R.string.list_load_more_msg), Toast.LENGTH_SHORT).show()
-                        homePresenter.fetchUsers(currentPage)
+                        fetchNewUsers()
                     }
                 }
             })
         }
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             navigateToActivity(CreateUserActivity::class.java)
         }
 
-        homePresenter.fetchUsers(currentPage)
+        fetchNewUsers()
+    }
 
+    private fun fetchNewUsers() {
+        if (!Network.isConnected(this)) {
+            fetchUsersFailed(getString(R.string.no_internet))
+            return
+        }
+
+        homePresenter.fetchUsers(currentPage)
     }
 
     private fun resetList() {
         userAdapter.clear()
         currentPage = 1
         pageTotal = 0
-        homePresenter.fetchUsers(currentPage)
+        fetchNewUsers()
     }
 
     override fun fetchUsersStarted() {
