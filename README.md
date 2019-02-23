@@ -1,7 +1,7 @@
 # Reqrez
 [![Build Status](https://travis-ci.com/richmahnn/Reqrez.svg?branch=master)](https://travis-ci.com/richmahnn/Reqrez)
 
-An example of Fetching sample users from reqres api using MVP, Dagger, Retrofit, Kotlin
+Android app that fetches and creates sample users using Reqres API. It is written in Kotlin and uses MVP, Dagger & Retrofit
 
 #### Screenshots
 <p float="left">
