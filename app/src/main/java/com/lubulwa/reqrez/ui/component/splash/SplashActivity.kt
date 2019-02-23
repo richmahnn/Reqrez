@@ -1,9 +1,11 @@
 package com.lubulwa.reqrez.ui.component.splash
 
 import android.os.Bundle
+import android.os.Handler
 import com.lubulwa.reqrez.R
 import com.lubulwa.reqrez.ui.base.BaseActivity
 import com.lubulwa.reqrez.ui.component.home.HomeActivity
+import com.lubulwa.reqrez.utils.Constants
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -16,7 +18,9 @@ class SplashActivity : BaseActivity(), SplashContract.View  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Start timer
+        // Injection dependencies
+        AndroidInjection.inject(this)
+
         splashPresenter.initialize()
     }
 
@@ -35,10 +39,6 @@ class SplashActivity : BaseActivity(), SplashContract.View  {
         splashPresenter.dropView()
 
         super.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
 }
